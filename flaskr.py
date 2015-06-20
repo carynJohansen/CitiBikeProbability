@@ -1,6 +1,6 @@
 # all the imports
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, json, jsonify
 from contextlib import closing
 
 # configuration
@@ -40,6 +40,14 @@ def show_entries():
   cur = g.db.execute('select title, text from entries order by id desc')
   entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
   return render_template('show_entries.html', entries=entries)
+
+@app.route('/test')
+def returnJSON():
+  cur = g.db.execute('select title, text from entries order by id desc')
+  entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+  test = jsonify(entries)
+  print entries
+  return test
 
 @app.route('/add', methods=['POST'])
 def add_entry():
