@@ -1,6 +1,6 @@
 # all the imports
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, json, jsonify
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, json
 from contextlib import closing
 
 # configuration
@@ -47,7 +47,7 @@ def returnJSON():
   entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
   test = jsonify(entries)
   print entries
-  return test
+  return json.dumps(entries)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
